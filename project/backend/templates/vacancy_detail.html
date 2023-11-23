@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #d5d5d5;
+            background-size: cover;
+            background-position: center center;
+            overflow-y: scroll;
+        }
+        p {
+            color: black;
+        }
+        h3 {
+            color: black;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<a href="{% url 'vacancy_list' %}"><i style="font-size: 4em; color: white;" class="fa-solid fa-arrow-left"></i></a>
+
+    <div style="margin: auto; margin-bottom: 20%;" class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Должность: {{ vacancy.title }}</strong>
+        <hr>
+          <h3 class="mb-0">Компания: {{ vacancy.company }}</h3>
+        <hr>
+          <p class="card-text mb-auto">Обязанности: {{ vacancy.duties}}</p>
+          <hr>
+          <p class="card-text mb-auto">Условия: {{ vacancy.conditions}}</p>
+        <hr>
+          <p class="card-text mb-auto">Зарплата: {{ vacancy.salary}}$</p>
+        <hr>
+          {% if not active %}
+            <p class="card-text mb-auto">Доступно!</p>
+          {% else %}
+            <p class="card-text mb-auto">Занято!</p>
+          {% endif %}
+        <a style="padding-top: 2%;" class="small text-nowrap fa-solid fa-trash text-danger text-decoration-none" href="{% url 'vacancy_delete' vacancy.id %}"></a>
+        <a style="padding-top: 2%;" class="fa-solid fa-pen" href="{% url 'vacancy_edit' vacancy.id %}"></a>
+        </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

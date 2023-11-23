@@ -1,0 +1,376 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=DM+Sans:500,700&display=swap');
+
+        body {
+    background-color: #181926;
+    background-position: center center;
+    overflow-x: hidden;
+
+}
+
+        * {
+  box-sizing: border-box;
+}
+
+
+
+.container3 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed; /* Fixed positioning for top center */
+    top: 0; /* Place at the top of the viewport */
+    width: 100%; /* Take the full width */
+    left: 2%;
+    z-index: 1000;
+}
+
+.nav {
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    background-color: #070A0D;
+    padding: 0 20px;
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(159, 162, 177, .8);
+    margin-bottom: 20px;
+}
+
+.nav-item {
+  color: #83818c;
+  padding: 20px;
+  text-decoration: none;
+  transition: .3s;
+  margin: 0 6px;
+  z-index: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #dfe2ea;
+    border-radius: 8px 8px 0 0;
+    opacity: 0;
+    transition: .3s;
+  }
+}
+
+.nav-item:not(.is-active):hover:before {
+  opacity: 1;
+  bottom: 0;
+}
+
+
+.nav-item:not(.is-active):hover { color: #333; }
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  transition: .4s;
+  height: 5px;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 580px) {
+  .nav { overflow: auto; }
+}
+
+#fontlink, #fontlink1,#fontlink2,#fontlink3,#fontlink4 {
+    display: none;
+}
+    </style>
+</head>
+
+<body>
+
+
+
+
+<div class="container3">
+<nav style="bottom: 45%" class="nav">
+  <a href="/home" class="nav-item is-active" active-color="orange">Home</a>
+  <a href="/createidea" class="nav-item" active-color="green">Suggest Idea</a>
+  <a href="/topideas" class="nav-item" active-color="blue">Top ideas</a>
+  <a href="#" class="nav-item" active-color="red">Profile</a>
+  <a href="#" class="nav-item" active-color="rebeccapurple">Ideas</a>
+
+  <span class="nav-indicator"></span>
+</nav>
+
+</div>
+<hr>
+<hr>
+<hr>
+<hr>
+
+<div  class="container my-2 mb-2">
+<nav aria-label="Page navigation example p-2 m-1">
+  <ul class="pagination pagination-sm justify-content-center">
+    {% if current_page.number != 1 %}
+        <li class="page-item">
+            <a href="?page=1" class="page-link">&laquo;&laquo; Первая</a>
+        </li>
+    {% endif %}
+
+  {% if current_page.has_previous %}
+    <li class="page-item">
+      <a href="?page={{ current_page.previous_page_number }}" class="page-link">&laquo; Предыдущая</a>
+    </li>
+      {% else %}
+      <li class="page-item disabled">
+      <a href="#" class="page-link">&laquo; Предыдущая</a>
+    </li>
+  {% endif %}
+
+    {% for page_number in current_page.paginator.page_range %}
+        {% if page_number == current_page.number %}
+            <li class="page-item active"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if current_page.has_next %}
+        <li class="page-item">
+            <a href="?page={{ current_page.next_page_number }}" class="page-link">Следующая &raquo;</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Следующая &raquo;</a>
+        </li>
+    {% endif %}
+
+    {% if current_page.number != current_page.paginator.num_pages %}
+        <li class="page-item">
+            <a href="?page={{ current_page.paginator.num_pages }}" class="page-link">Последняя &raquo;&raquo;</a>
+        </li>
+    {% endif %}
+
+  </ul>
+</nav>
+</div>
+<div class="row row-cols-1 row-cols-lg-3 justify-content-between g-4 py-5">
+        {% for idea in current_page %}
+          <div style="width: 450px; padding-bottom: 5%" class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                {% if idea.image %}
+                    <img src="{% static idea.image.url %}" alt="image"
+                         class="img-thumbnail img-fluid" width="400"/>
+                {% endif %}
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ idea.title }}</h3>
+                  <p class="lead">{{ idea.description }}</p>
+                <ul class="d-flex list-unstyled mt-auto">
+                  <li class="me-auto">
+                    <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+                  </li>
+                  <li class="d-flex align-items-center me-3">
+                    <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                    <small>{{ idea.author.username }}</small>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                    <small>{{ idea.datetime }}</small>
+                  </li>
+                </ul>
+                <div class="input-group">
+                    <a class="btn btn-lg btn-light w-75" href="{% url 'idea_detail' idea.id %}">читать идею</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+ </div>
+
+
+
+
+
+  </div>
+
+<footer style="background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      bottom: 0;
+      width: 100%;">
+    &copy; 2023 Ваше название или информация о правах
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        let isExpanded = false;
+
+const card = document.querySelector(".card");
+const row = document.querySelector(".row");
+const animate1 = document.querySelector(".animate1");
+const animate2 = document.querySelector(".animate2");
+const animate3 = document.querySelector(".animate3");
+
+// Keyframes
+const values1 = [
+  "M 84,24 C 84,24 61.333333,24.001 50,24.001 38.666667,24.001 16,24 16,24",
+  "M 82,24 C 82,24 66.957389,30.5 50,30.5 33.042611,30.5 18,24 18,24",
+  "M 80,24 C 80,24 61.663104,37 50,37 38.336896,37 20,24 20,24",
+  "M 78,24 C 78,24 55.685686,43.5 50,43.5 44.314314,43.5 22,24 22,24",
+  "M 76,24 C 76,24 50.055365,50 50,50 49.94463,50 24,24 24,24"
+];
+const values2 = [
+  "M 84,50 H 50 16",
+  "M 75.5,50 H 50 24.5",
+  "M 67,50 H 50 33",
+  "M 58.5,50 H 50 41.5",
+  "M 50.001,50 H 50 49.99"
+];
+const values3 = [
+  "M 84,76 C 84,76 61.333333,76.001 50,76.001 38.666667,76.001 16,76 16,76",
+  "M 82,76 C 82,76 66.957389,69.5 50,69.5 33.042611,69.5 18,76 18,76",
+  "M 80,76 C 80,76 61.663104,63 50,63 38.336896,63 20,76 20,76",
+  "M 78,76 C 78,76 55.685686,56.5 50,56.5 44.314314,56.5 22,76 22,76",
+  "M 76,76 C 76,76 50.055365,50 50,50 49.944635,50 24,76 24,76"
+];
+
+function toggleAnimation(values, animate) {
+  animate.setAttribute(
+    "values",
+    !isExpanded ? values.join("; ") : values.slice().reverse().join("; ")
+  );
+  animate.beginElement();
+}
+
+function handleClick() {
+  const menuLinks = document.querySelectorAll('.menu-link');
+  const logo = document.getElementById('fontlink');
+  const logo1 = document.getElementById('fontlink1');
+  const logo2 = document.getElementById('fontlink2');
+  const logo3 = document.getElementById('fontlink3');
+  const logo4 = document.getElementById('fontlink4');
+
+  isExpanded = row.getAttribute("aria-expanded") === "true";
+   if (isExpanded) {
+                card.classList.remove("active");
+                // Скрыть ссылку при закрытии меню
+                fontlink.style.display = 'none';
+                fontlink1.style.display = 'none';
+                fontlink2.style.display = 'none';
+                fontlink3.style.display = 'none';
+                fontlink4.style.display = 'none';
+
+
+
+
+                homeLink.style.display = 'none';
+                 homeLink1.style.display = 'none';
+                  homeLink2.style.display = 'none';
+                   homeLink3.style.display = 'none';
+                    homeLink4.style.display = 'none';
+            } else {
+                card.classList.add("active");
+                fontlink.style.display = 'block';
+                fontlink1.style.display = 'block';
+                fontlink2.style.display = 'block';
+                fontlink3.style.display = 'block';
+                fontlink4.style.display = 'block';
+
+
+
+
+
+
+                // Показать ссылку при открытии меню
+                homeLink.style.display = 'block';
+                homeLink1.style.display = 'block';
+                homeLink2.style.display = 'block';
+                homeLink3.style.display = 'block';
+                homeLink4.style.display = 'block';
+   }
+  if (isExpanded) {
+    card.classList.remove("active");
+  } else {
+    card.classList.add("active");
+  }
+  menuLinks.forEach(link => {
+    link.style.display = isExpanded ? 'none' : 'block';
+  });
+  logo.style.display = isExpanded ? 'none' : 'block';
+  logo1.style.display = isExpanded ? 'none' : 'block';
+  logo2.style.display = isExpanded ? 'none' : 'block';
+  logo3.style.display = isExpanded ? 'none' : 'block';
+  logo4.style.display = isExpanded ? 'none' : 'block';
+  toggleAnimation(values1, animate1);
+  toggleAnimation(values2, animate2);
+  toggleAnimation(values3, animate3);
+
+  row.setAttribute("aria-expanded", !isExpanded);
+  row.setAttribute("aria-label", !isExpanded ? "Close Menu" : "Open Menu");
+
+
+}
+
+function initPath(clazz, descriptor) {
+  const path = document.querySelector(clazz);
+  path.setAttribute("d", descriptor);
+}
+
+initPath(".path1", values1[0]);
+initPath(".path2", values2[0]);
+initPath(".path3", values3[0]);
+
+row.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    row.click();
+  }
+});
+
+
+
+const indicator = document.querySelector('.nav-indicator');
+const items = document.querySelectorAll('.nav-item');
+
+function handleIndicator(el) {
+  items.forEach(item => {
+    item.classList.remove('is-active');
+    item.removeAttribute('style');
+  });
+
+  indicator.style.width = `${el.offsetWidth}px`;
+  indicator.style.left = `${el.offsetLeft}px`;
+  indicator.style.backgroundColor = el.getAttribute('active-color');
+
+  el.classList.add('is-active');
+  el.style.color = el.getAttribute('active-color');
+}
+
+
+items.forEach((item, index) => {
+  item.addEventListener('click', (e) => { handleIndicator(e.target)});
+  item.classList.contains('is-active') && handleIndicator(item);
+});
+
+    </script>
+
+</body></html>

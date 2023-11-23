@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-image: url("https://pibig.info/uploads/posts/2022-11/1669834714_1-pibig-info-p-temnie-oboi-kosmos-krasivo-1.jpg");
+        }
+
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px; /* Увеличил ширину формы */
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            background-color: rgba(128, 128, 128, 0.3);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+        }
+
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .user-box {
+            position: relative;
+            margin-bottom: 30px; /* Добавил отступ между блоками с полями ввода */
+        }
+
+        .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 10px; /* Уменьшил отступ между полем ввода и лейблом */
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+
+        .user-box label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .user-box input:focus ~ label,
+        .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 12px;
+        }
+
+        .login-box form button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03e9f4;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px
+        }
+
+        .login-box button:hover {
+            background: #03e9f4;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                        0 0 25px #03e9f4,
+                        0 0 50px #03e9f4,
+                        0 0 100px #03e9f4;
+        }
+
+        .login-box button button {
+            position: absolute;
+            display: block;
+        }
+
+        .login-box button button:nth-child(1),
+        .login-box button button:nth-child(2),
+        .login-box button button:nth-child(3),
+        .login-box button button:nth-child(4) {
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+        }
+
+        .login-box button button:nth-child(2) {
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        .login-box button button:nth-child(3) {
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+        }
+
+        .login-box button button:nth-child(4) {
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+        }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%,100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%,100% {
+                top: 100%;
+            }
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%,100% {
+                right: 100%;
+            }
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,100% {
+                bottom: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <a href="{% url 'home_l' %}"><i  style="font-size: 4em; color: white;" class="fa-solid fa-house"></i></a>
+        <h2>Suggest idea</h2>
+
+        <form class="decor" action="{% url 'idea_create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+
+            <div class="user-box">
+                <input type="text" name="title" required="">
+                <label>Title</label>
+            </div>
+
+            <div class="user-box">
+                <input type="text" name="description" required="">
+                <label>Description</label>
+            </div>
+            <label style="color: white">Image</label>
+            <div class="user-box">
+                <input type="file" name="image" required="">
+
+            </div>
+            <label style="color: white">File</label>
+            <div class="user-box">
+
+                <input type="file" name="file" required="">
+
+            </div>
+            <label style="color: white;" class="label  mb-1" for="id_date">Date:</label>
+            <div class="user-box">
+                <input  class="input" type="date" id="id_date" name="date">
+            </div>
+
+            <button style="background-color: #03e9f4; color: white; border: none; border-radius: 10px;" class="btn btn" type="submit">Send<a style="text-decoration: none; color:white;" href="#"><span><span><span><span></span></span></span></span></a></button>
+        </form>
+    </div>
+</body>
+</html>

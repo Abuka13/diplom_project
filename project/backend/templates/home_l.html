@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=DM+Sans:500,700&display=swap');
+
+        body {
+    background-color: #181926;
+    background-position: center center;
+    height: 150vh;
+    margin: 0; /* Remove default body margin */
+}
+
+        * {
+  box-sizing: border-box;
+}
+.container1 {
+    align-items: center;
+    margin-right: 87%;
+    margin-bottom: 20%;
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Fixed positioning for top-left corner */
+    top: 0; /* Place at the top of the viewport */
+    left: 0; /* Place at the left of the viewport */
+}
+.card {
+  background-color: #070A0D;
+  border-radius: 20px;
+  box-shadow: 0px 1.5px 5.4px rgba(0, 0, 0, 0.054),
+    0px 3.7px 10.9px rgba(0, 0, 0, 0.068), 0px 7px 16.8px rgba(0, 0, 0, 0.074),
+    0px 12.5px 24.6px rgba(0, 0, 0, 0.076),
+    0px 23.4px 38.1px rgba(0, 0, 0, 0.08), 0px 56px 80px rgba(0, 0, 0, 0.1);
+  height: 76px;
+
+  transition: height 400ms;
+  -webkit-tap-highlight-color: #00000010;
+}
+.card.active {
+  height: 400px;
+}
+.title {
+  font-family: sans-serif;
+  font-size: 18px;
+  margin-top: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.row {
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  transition: height 400ms;
+  width: 200px;
+}
+.icon {
+  fill: none;
+  margin-top: 0px;
+  stroke: #fff;
+  stroke-width: 12;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed; /* Fixed positioning for top center */
+    top: 0; /* Place at the top of the viewport */
+    width: 100%; /* Take the full width */
+    left: 7%;
+}
+
+.nav {
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    background-color: #070A0D;
+    padding: 0 20px;
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(159, 162, 177, .8);
+    margin-bottom: 20px; /* Add margin to create space between container1 and container */
+}
+
+.nav-item {
+  color: #83818c;
+  padding: 20px;
+  text-decoration: none;
+  transition: .3s;
+  margin: 0 6px;
+  z-index: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #dfe2ea;
+    border-radius: 8px 8px 0 0;
+    opacity: 0;
+    transition: .3s;
+  }
+}
+
+.nav-item:not(.is-active):hover:before {
+  opacity: 1;
+  bottom: 0;
+}
+
+
+.nav-item:not(.is-active):hover { color: #333; }
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  transition: .4s;
+  height: 5px;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 580px) {
+  .nav { overflow: auto; }
+}
+.menu-link {
+    display: none;
+}
+#fontlink, #fontlink1,#fontlink2,#fontlink3,#fontlink4 {
+    display: none;
+}
+    </style>
+</head>
+
+<body>
+<h1 style="color: white; margin-top: 15%; margin-left: 44%">Welcome!</h1>
+<hr style="margin-top: 10%; height: 20px; background-color: white; color: white">
+<h1 style="color: white; margin-top: 8%; margin-left: 45%">Новости</h1>
+
+<div class="container1">
+<div class="card">
+  <div class="row" onclick="handleClick()" role="button" tabindex="0" aria-expanded="false" aria-label="Open Menu">
+
+    <svg width="32" height="32" viewBox="0 0 100 100" class="icon">
+      <path class="path1">
+        <animate class="animate1" attributeName="d" dur="0.35s" repeatCount="1" fill="freeze" />
+
+      </path>
+      <path class="path2">
+        <animate class="animate2" attributeName="d" dur="0.35s" repeatCount="1" fill="freeze" />
+      </path>
+      <path class="path3">
+        <animate class="animate3" attributeName="d" dur="0.35s" repeatCount="1" fill="freeze" />
+
+      </path>
+
+    </svg>
+  </div>
+  <div style="display: flex; flex-direction: column;">
+
+    <div style="display: flex; flex-direction: row;"><a href="/home" style="color: white; font-size: 20px; text-decoration: none; margin-top: 1.5%; margin-left: 10%" id="fontlink"  class="fas fa-house"></a><a href="/home" style="text-decoration: none; color: white; margin-left: 10% " id="homeLink"  active-color="orange" class="menu-link">Home</a></div>
+    <div style="display: flex; flex-direction: row; margin-top: 18%"><a href="/createidea" style="color: white; font-size: 20px; text-decoration: none; margin-top: 1.5%; margin-left: 10%" id="fontlink1"  class="fa-solid fa-lightbulb"></a><a href="/createidea" style="text-decoration: none; color: white; margin-left: 10%"   id="homeLink1"  active-color="orange" class="menu-link">Suggest Idea</a></div>
+    <div style="display: flex; flex-direction: row; margin-top: 18%"><a style="color: white; font-size: 20px; text-decoration: none; margin-top: 1.5%; margin-left: 10%" id="fontlink2" class="fa-solid fa-star"></a><a style="text-decoration: none; color: white; margin-left: 10%  " id="homeLink2" href="#" active-color="orange" class="menu-link" >Top ideas</a></div>
+    <div style="display: flex; flex-direction: row; margin-top: 18%"><a style="color: white; font-size: 20px; text-decoration: none; margin-top: 1.5%; margin-left: 10%" id="fontlink3" class="fa-solid fa-user"></a><a style="text-decoration: none; color: white; margin-left: 10%  " id="homeLink3" href="#" active-color="orange" class="menu-link">{{request.user.username}}</a></div>
+    <div style="display: flex; flex-direction: row; margin-top: 18%"><a href="/logout" style="color: white; font-size: 20px; text-decoration: none; margin-top: 1.5%; margin-left: 10%" id="fontlink4" class="fa-solid fa-right-from-bracket"></a><a style="text-decoration: none; color: white; margin-left: 10%  " id="homeLink4" href="/logout" active-color="orange" class="menu-link">Logout</a></div>
+  </div>
+
+</div>
+</div>
+<div class="container">
+<nav style="bottom: 45%" class="nav">
+  <a href="/home" class="nav-item is-active" active-color="orange">Home</a>
+  <a href="/createidea" class="nav-item" active-color="green">Suggest Idea</a>
+  <a href="/topideas" class="nav-item" active-color="blue">Top ideas</a>
+  {% for room in rooms %}
+    <a href="/{{ room.slug }}" class="nav-item" active-color="red">Online chat</a>
+  {% endfor %}
+  <a href="/list" class="nav-item" active-color="rebeccapurple">Ideas</a>
+
+  <span class="nav-indicator"></span>
+</nav>
+</div>
+
+<div style="margin-left: 7%; display: flex; flex-direction: row; height: 300px; width: 1500px;" class="row">
+    {% for idea in data2 %}
+        <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
+
+        <h2 style="margin-right: 15%; font-size: 25px; color: white" class="fw-normal">{{idea.title}}</h2>
+        <h2 style="color:white">{{idea.author}}</h2>
+        <p><a class="btn btn-secondary" href="#">View details »</a></p>
+      </div><!-- /.col-lg-4 -->
+    {% endfor %}
+</div>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        let isExpanded = false;
+
+const card = document.querySelector(".card");
+const row = document.querySelector(".row");
+const animate1 = document.querySelector(".animate1");
+const animate2 = document.querySelector(".animate2");
+const animate3 = document.querySelector(".animate3");
+
+// Keyframes
+const values1 = [
+  "M 84,24 C 84,24 61.333333,24.001 50,24.001 38.666667,24.001 16,24 16,24",
+  "M 82,24 C 82,24 66.957389,30.5 50,30.5 33.042611,30.5 18,24 18,24",
+  "M 80,24 C 80,24 61.663104,37 50,37 38.336896,37 20,24 20,24",
+  "M 78,24 C 78,24 55.685686,43.5 50,43.5 44.314314,43.5 22,24 22,24",
+  "M 76,24 C 76,24 50.055365,50 50,50 49.94463,50 24,24 24,24"
+];
+const values2 = [
+  "M 84,50 H 50 16",
+  "M 75.5,50 H 50 24.5",
+  "M 67,50 H 50 33",
+  "M 58.5,50 H 50 41.5",
+  "M 50.001,50 H 50 49.99"
+];
+const values3 = [
+  "M 84,76 C 84,76 61.333333,76.001 50,76.001 38.666667,76.001 16,76 16,76",
+  "M 82,76 C 82,76 66.957389,69.5 50,69.5 33.042611,69.5 18,76 18,76",
+  "M 80,76 C 80,76 61.663104,63 50,63 38.336896,63 20,76 20,76",
+  "M 78,76 C 78,76 55.685686,56.5 50,56.5 44.314314,56.5 22,76 22,76",
+  "M 76,76 C 76,76 50.055365,50 50,50 49.944635,50 24,76 24,76"
+];
+
+function toggleAnimation(values, animate) {
+  animate.setAttribute(
+    "values",
+    !isExpanded ? values.join("; ") : values.slice().reverse().join("; ")
+  );
+  animate.beginElement();
+}
+
+function handleClick() {
+  const menuLinks = document.querySelectorAll('.menu-link');
+  const logo = document.getElementById('fontlink');
+  const logo1 = document.getElementById('fontlink1');
+  const logo2 = document.getElementById('fontlink2');
+  const logo3 = document.getElementById('fontlink3');
+  const logo4 = document.getElementById('fontlink4');
+
+  isExpanded = row.getAttribute("aria-expanded") === "true";
+   if (isExpanded) {
+                card.classList.remove("active");
+                // Скрыть ссылку при закрытии меню
+                fontlink.style.display = 'none';
+                fontlink1.style.display = 'none';
+                fontlink2.style.display = 'none';
+                fontlink3.style.display = 'none';
+                fontlink4.style.display = 'none';
+
+
+
+
+                homeLink.style.display = 'none';
+                 homeLink1.style.display = 'none';
+                  homeLink2.style.display = 'none';
+                   homeLink3.style.display = 'none';
+                    homeLink4.style.display = 'none';
+            } else {
+                card.classList.add("active");
+                fontlink.style.display = 'block';
+                fontlink1.style.display = 'block';
+                fontlink2.style.display = 'block';
+                fontlink3.style.display = 'block';
+                fontlink4.style.display = 'block';
+
+
+
+
+
+
+                // Показать ссылку при открытии меню
+                homeLink.style.display = 'block';
+                homeLink1.style.display = 'block';
+                homeLink2.style.display = 'block';
+                homeLink3.style.display = 'block';
+                homeLink4.style.display = 'block';
+   }
+  if (isExpanded) {
+    card.classList.remove("active");
+  } else {
+    card.classList.add("active");
+  }
+  menuLinks.forEach(link => {
+    link.style.display = isExpanded ? 'none' : 'block';
+  });
+  logo.style.display = isExpanded ? 'none' : 'block';
+  logo1.style.display = isExpanded ? 'none' : 'block';
+  logo2.style.display = isExpanded ? 'none' : 'block';
+  logo3.style.display = isExpanded ? 'none' : 'block';
+  logo4.style.display = isExpanded ? 'none' : 'block';
+  toggleAnimation(values1, animate1);
+  toggleAnimation(values2, animate2);
+  toggleAnimation(values3, animate3);
+
+  row.setAttribute("aria-expanded", !isExpanded);
+  row.setAttribute("aria-label", !isExpanded ? "Close Menu" : "Open Menu");
+
+
+}
+
+function initPath(clazz, descriptor) {
+  const path = document.querySelector(clazz);
+  path.setAttribute("d", descriptor);
+}
+
+initPath(".path1", values1[0]);
+initPath(".path2", values2[0]);
+initPath(".path3", values3[0]);
+
+row.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    row.click();
+  }
+});
+
+
+
+const indicator = document.querySelector('.nav-indicator');
+const items = document.querySelectorAll('.nav-item');
+
+function handleIndicator(el) {
+  items.forEach(item => {
+    item.classList.remove('is-active');
+    item.removeAttribute('style');
+  });
+
+  indicator.style.width = `${el.offsetWidth}px`;
+  indicator.style.left = `${el.offsetLeft}px`;
+  indicator.style.backgroundColor = el.getAttribute('active-color');
+
+  el.classList.add('is-active');
+  el.style.color = el.getAttribute('active-color');
+}
+
+
+items.forEach((item, index) => {
+  item.addEventListener('click', (e) => { handleIndicator(e.target)});
+  item.classList.contains('is-active') && handleIndicator(item);
+});
+
+    </script>
+
+</html>

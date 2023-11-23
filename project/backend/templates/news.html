@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News from Tengrinews</title>
+    <style>
+        h3 {
+            color: white;
+        }
+    </style>
+</head>
+<body style="background-color: black">
+    <h1>News from Tengrinews</h1>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-around; margin-left: 15%" class="row row-cols-1 row-cols-lg-3 justify-content-between g-4 py-5">
+        {% for idea in data2 %}
+          <div style="width: 450px; padding-bottom: 5%" class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-row h-100 p-5 pb-3 text-white text-shadow-1">
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ idea.title }}</h3>
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ idea.author }}</h3>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+ </div>
+</body>
+</html>

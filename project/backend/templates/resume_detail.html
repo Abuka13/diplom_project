@@ -1,0 +1,119 @@
+{% load django_app_filters_and_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #d5d5d5;
+            background-size: cover;
+            background-position: center center;
+            overflow-y: scroll;
+        }
+        p {
+            color: black;
+        }
+        h3 {
+            color: black;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<a href="{% url 'resume_list' %}"><i style="font-size: 4em; color: white;" class="fa-solid fa-arrow-left"></i></a>
+
+    <div style="margin: auto; margin-bottom: 20%;" class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Должность: {{ resume.post }}</strong>
+        <hr>
+          <h3 class="mb-0">Полное имя: {{ resume.full_name }}</h3>
+        <hr>
+
+          <p class="card-text mb-auto">Скиллы: {{ resume.skills}}</p>
+          <hr>
+          <p class="card-text mb-auto">Опыт: {{ resume.experience}}</p>
+        <hr>
+          <p class="card-text mb-auto">Обучение: {{ resume.education}}$</p>
+        <hr>
+        <h3 class="mb-0">Номер: {{ resume.phone_number }}</h3>
+        {% if user.is_authenticated %}
+                <div style="display: flex; flex-direction: row">
+                {% i_liked_this_resume resume.id as my_rule %}
+                <a href="{% url "resume_rating" resume.id 'лайк' %}"
+                    {% if my_rule == 1 %}
+                       class="btn btn-success d-inline-flex align-items-center m-1 p-1">
+                    {% else %}
+                       class="btn btn-outline-success d-inline-flex align-items-center m-1 p-1">
+                    {% endif %}
+                    <i class="fa-solid fa-thumbs-up">{{ ratings.like }}</i>
+                </a>
+
+                <a href="{% url "resume_rating" resume.id 'дизлайк' %}"
+                    {% if my_rule == -1 %}
+                        class="btn btn-danger d-inline-flex align-items-center m-1 p-1">
+                    {% else %}
+                        class="btn btn-outline-danger d-inline-flex align-items-center m-1 p-1">
+                    {% endif %}
+                    <i class="fa-solid fa-thumbs-down">{{ ratings.dislike }}</i>
+                </a>
+            {% endif %}
+        <a style="padding-top: 2%;" class="small text-nowrap fa-solid fa-trash text-danger text-decoration-none" href="{% url 'resume_delete' resume.id %}"></a>
+        <a style="padding-top: 2%;" class="fa-solid fa-pen" href="{% url 'resume_edit' resume.id %}"></a>
+        </div>
+        </div>
+
+
+      </div>
+    </div>
+
+<div style="background-color: black" class="container px-4 py-1 bg-light card" id="hanging-icons">
+    <h2 class="pb-2 border-bottom">Комментарии:</h2>
+{% if user.is_authenticated %}
+    <form action="{% url "resume_create_comment" resume.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal text-center">Ваш комментарий:</h1>
+        <div class="input-group">
+            <input name="text" type="text" class="form-control" id="floatingInput" placeholder="я думаю..." minlength="5" maxlength="200" required>
+            <button class="btn btn-warning w-25 py-2" type="submit">Создать</button>
+        </div>
+    </form>
+{% endif %}
+    <hr/>
+    <div  class="row g-4 py-1 row-cols-1 row-cols-lg-3">
+        {% for comment in comments %}
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+            </div>
+            <div>
+                <h3 style="color: black;" class="fs-2 text-body-emphasis">{{ comment.author.username }}</h3>
+                <p style="color: black;">{{ comment.text }}</p>
+                <hr class="m-0 p-1"/>
+                <p style="color: black;" class="text-secondary small">{{ comment.date_time }}</p>
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col d-flex align-items-start">
+            <div>
+                <h3 style="color: black;" class="fs-2 text-body-emphasis">Комментариев нет!</h3>
+                <p style="color: black;" > Вы можете быть первыми!</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

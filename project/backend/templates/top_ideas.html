@@ -1,0 +1,211 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=DM+Sans:500,700&display=swap');
+
+        body {
+    background-color: #181926;
+    background-position: center center;
+    overflow-x: hidden;
+
+}
+
+        * {
+  box-sizing: border-box;
+}
+
+
+
+.container3 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed; /* Fixed positioning for top center */
+    top: 0; /* Place at the top of the viewport */
+    width: 100%; /* Take the full width */
+    left: 2%;
+    z-index: 1000;
+}
+
+.nav {
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    background-color: #070A0D;
+    padding: 0 20px;
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(159, 162, 177, .8);
+    margin-bottom: 20px;
+}
+
+.nav-item {
+  color: #83818c;
+  padding: 20px;
+  text-decoration: none;
+  transition: .3s;
+  margin: 0 6px;
+  z-index: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #dfe2ea;
+    border-radius: 8px 8px 0 0;
+    opacity: 0;
+    transition: .3s;
+  }
+}
+
+.nav-item:not(.is-active):hover:before {
+  opacity: 1;
+  bottom: 0;
+}
+
+
+.nav-item:not(.is-active):hover { color: #333; }
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  transition: .4s;
+  height: 5px;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 580px) {
+  .nav { overflow: auto; }
+}
+
+#fontlink, #fontlink1,#fontlink2,#fontlink3,#fontlink4 {
+    display: none;
+}
+    </style>
+</head>
+
+<body>
+
+
+
+
+<div class="container3">
+<nav style="bottom: 45%" class="nav">
+  <a href="/home" class="nav-item is-active" active-color="orange">Home</a>
+  <a href="/createidea" class="nav-item" active-color="green">Suggest Idea</a>
+  <a href="/topideas" class="nav-item" active-color="blue">Top ideas</a>
+  <a href="#" class="nav-item" active-color="red">Profile</a>
+  <a href="/list" class="nav-item" active-color="rebeccapurple">Ideas</a>
+
+  <span class="nav-indicator"></span>
+</nav>
+</div>
+<hr>
+<hr>
+<hr>
+<hr>
+<h1 style="text-align: center; color: white">Список лидеров</h1>
+<div style=" display: flex; flex-direction: row; justify-content: space-around">
+<h1 style="margin-right: 15%; color: gold; font-size: 50px">1</h1>
+<h1 style="margin-right: 15%; color: silver; font-size: 50px">2</h1>
+<h1 style="margin-right:    %; color: saddlebrown; font-size: 50px">3</h1>
+</div>
+<div class="row row-cols-1 row-cols-lg-3 justify-content-between g-4 py-5">
+
+        {% for top_idea in top_ideas %}
+
+          <div style="width: 450px; padding-bottom: 5%" class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                {% if top_idea.image %}
+                    <img src="{% static top_idea.image.url %}" alt="image"
+                         class="img-thumbnail img-fluid" width="400"/>
+                {% endif %}
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ top_idea.title }}</h3>
+                  <p class="lead">{{ top_idea.description }}</p>
+                <ul class="d-flex list-unstyled mt-auto">
+                  <li class="d-flex align-items-center me-3">
+                    <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                    <small>{{ top_idea.author.username }}</small>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                    <small>{{ top_idea.datetime }}</small>
+                  </li>
+                </ul>
+                <div style="display: flex; flex-direction: row;" class="input-group">
+                    <a class="btn btn-lg btn-light w-75" href="{% url 'idea_detail' top_idea.id %}">читать идею</a>
+                    <i style="color: green; margin-top: 5%; margin-left: 15%; font-size: 20px" class="fa-solid fa-thumbs-up">{{ top_idea.total_rating }}</i>
+               </div>
+            </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+
+
+
+
+
+
+  </div>
+
+<footer style="background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      bottom: 0;
+      width: 100%;">
+    &copy; 2023 Ваше название или информация о правах
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+
+
+
+const indicator = document.querySelector('.nav-indicator');
+const items = document.querySelectorAll('.nav-item');
+
+function handleIndicator(el) {
+  items.forEach(item => {
+    item.classList.remove('is-active');
+    item.removeAttribute('style');
+  });
+
+  indicator.style.width = `${el.offsetWidth}px`;
+  indicator.style.left = `${el.offsetLeft}px`;
+  indicator.style.backgroundColor = el.getAttribute('active-color');
+
+  el.classList.add('is-active');
+  el.style.color = el.getAttribute('active-color');
+}
+
+
+items.forEach((item, index) => {
+  item.addEventListener('click', (e) => { handleIndicator(e.target)});
+  item.classList.contains('is-active') && handleIndicator(item);
+});
+
+    </script>
+
+</body></html>
